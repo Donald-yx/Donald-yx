@@ -1,0 +1,19 @@
+int lianbiaodecharu(PNODE,charuweizhi,charushuzi){
+    int i=0;
+    PONDE p;
+    while(NULL!=p&&i<charuweizhi-1){
+        p=p->Pnext;
+        i++
+    }//创造一个指针指向所要插入节点前一个节点的位置
+        if(p==NULL||i>charuweizhi-1){
+            return false;
+        }//第二个条件判断是否输入的为负数第一个判断是否输入了大于链表节点的个数；
+    PNODE Pnew=(PNODE)malloc(sizeof(NODE));//要插入的那个节点
+    if(Pnew==NULL)
+        {分配失败}
+        Pnew->data=charushuzi;
+         PNODE q=p->Pnext;//创造临时指针将索要插入的指针进行插入//即指针域进行交换类似t=a;a=b;b=t;
+         p->Pnext=Pnew->Pnext;
+         Pnew->Pnext=q;
+
+}
