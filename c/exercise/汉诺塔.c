@@ -4,7 +4,7 @@ if(m==1){
     printf("直接将%d盘子%c移动到%c上面",m,x,z);
 }else{
     hannuota(m-1,x,z,y);
-    printf("将%d盘子%c移动到%c上面");
+    printf("将%d盘子%c移动到%c上面",n,x,z);
     hannuota(m-1,y,x,z);
 }
 }
