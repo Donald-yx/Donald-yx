@@ -26,7 +26,10 @@ bool shengcheng(PNODE L,int n){
  }
 }
 hafumanbianma(PNODE L,int n,char**hc){
-   char * p=(char *)malloc(sizeof(char)*(n-1));//临时空间，存放每个字符哈夫曼编码数，//这个空间为最大的字符的哈夫曼编码的空间，后面用的时候可以将其缩小
+
+
+
+   char * p=(char *)malloc(sizeof(char)*n);//临时空间，存放每个字符哈夫曼编码数，//这个空间为最大的字符的哈夫曼编码的空间，后面用的时候可以将其缩小,这里应该是/0占用一个
     int i;p[n-1]='\0';
     int c=0;int father=0;int start=n-1;//c是记录当前回溯到的点的位置，father是存放每个节点的父节点，start这个数是为了记录指向每个边为"0""还是"1"
     //然后存放在临时的属于当前字符的数组当中，，是倒着存放；
@@ -45,10 +48,35 @@ hafumanbianma(PNODE L,int n,char**hc){
     }
     free(p);
 }
+bool select(PNODE L,int n,int *s1,int *s2){
+        for(int i=1;i<=n;i++){
+            if(L[i].parent==NULL){
+                *s1=i;break;//初始化s1，找到一个双亲几点为0的节点
+            }
+        }
+        for(int i=1;i<=n;i++){
+            if(L[i].parent==NULL&&L[*s1].quanzhi>L[i].quanzhi){//每次进行哈夫曼编码的节点都应该是双亲节点为0//开始与整个所给数据当中的权值进行比较，找到一个范围内最小的权值
+                *s1=i;
+            }
+        }
+        for(int i=1;i<=n;i++){//初始化s2，找到一个双亲几点为0的节点
+            if(L[i].parent==NULL&&*s2!=*s1){
+               *s2=i;
+               break;
+            }
+        }
+        for(int i=1;i<=n;i++){
+            if(L[i].parent==NULL&&L[*s2].quanzhi>L[i].quanzhi&&*s2!=*s1){//同样道理，找到一个和s1不相同到全职次小的节点
+                *s2=i;
+            }
+        }
 
+
+}
 int main(){
 NODE L;int n;//n是构成哈夫曼树一开始的节点个数，用户自己输入b,必须还得给出一个权的集合，依次输入到n个节点当中去
-chushihua(&L,n);
+chushihua(&L,n);int s1,s2;
+select(&L,n,&s1,&s2);
 shengcheng(&L,n);
 char* hc=(char*)malloc(sizeof(char)*n);//想要获得的哈夫曼编码表,一维数组，是所有字符的哈夫曼编码的综合
 hafumanbianma(&L,n,hc);
