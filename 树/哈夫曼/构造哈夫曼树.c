@@ -25,12 +25,33 @@ bool shengcheng(PNODE L,int n){
      L[i].quanzhi=L[shu1].quanzhi+L[shu2].quanzhi;//最后将这两个孩子的权值相加赋值给双亲的权，结束
  }
 }
+hafumanbianma(PNODE L,int n,char**hc){
+   char * p=(char *)malloc(sizeof(char)*(n-1));//临时空间，存放每个字符哈夫曼编码数，//这个空间为最大的字符的哈夫曼编码的空间，后面用的时候可以将其缩小
+    int i;p[n-1]='\0';
+    int c=0;int father=0;int start=n-1;//c是记录当前回溯到的点的位置，father是存放每个节点的父节点，start这个数是为了记录指向每个边为"0""还是"1"
+    //然后存放在临时的属于当前字符的数组当中，，是倒着存放；
+    for(i=1;i<=n;i++){
+        c=i;//记录当前位置
+        father=L[i].parent;//记录父节点
+        while(father!=NULL){//判断双亲结点是否为0若为0的话说明已经到达了根节点
+            if(L[father].lchild==i){--start;p[start]='0';}//判断第i个位置在双亲中是左孩子还是右孩子
+            else {p[--start]='1';}
+            c=father;//将所要判断的位置移动到双亲结点上，然后判断双亲结点在它的双亲结点中是做孩子还是右孩子
+            father=L[father].parent;//第i个位置的双亲的双亲，判断双亲在双亲的双亲中是做孩子还是右孩子
+        }
+        hc[i]=(char*)malloc(sizeof(char)*(n-start));//为当前这个位置，开辟一个空间存放哈夫曼编码，，n-start意思是在得到的哈夫曼编码临时数组当中，二进制编码数字的个数不算'\0'
+        strcpy(hc[i],&p[n-start]);//意思是将所得到的当前位置的那个字符的哈夫曼编码复制到hc这个哈夫曼编码的总表当中
 
+    }
+    free(p);
+}
 
 int main(){
 NODE L;int n;//n是构成哈夫曼树一开始的节点个数，用户自己输入b,必须还得给出一个权的集合，依次输入到n个节点当中去
 chushihua(&L,n);
 shengcheng(&L,n);
+char* hc=(char*)malloc(sizeof(char)*n);//想要获得的哈夫曼编码表,一维数组，是所有字符的哈夫曼编码的综合
+hafumanbianma(&L,n,hc);
 
 
     return 0;
