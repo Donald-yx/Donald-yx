@@ -78,7 +78,7 @@ NODE L;int n;//n是构成哈夫曼树一开始的节点个数，用户自己输�
 chushihua(&L,n);int s1,s2;
 select(&L,n,&s1,&s2);
 shengcheng(&L,n);
-char* hc=(char*)malloc(sizeof(char)*n);//想要获得的哈夫曼编码表,一维数组，是所有字符的哈夫曼编码的综合
+char** hc=(char**)malloc(sizeof(char*)*n);//想要获得的哈夫曼编码表,是所有字符的哈夫曼编码的综合***这是一个存放指针的指针数组，这个表中存放的是许多个指针，而这些指针分别指向不同的字符数组
 hafumanbianma(&L,n,hc);
 
 
