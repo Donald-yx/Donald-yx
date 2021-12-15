@@ -1,0 +1,4 @@
+mid = low + (key - seq[low])*(high - low)/(seq[high] - seq[low]);
+
+相当于将二分法查找中的mid之更改
+其余不变
